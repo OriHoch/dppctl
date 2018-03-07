@@ -143,3 +143,45 @@ INFO    :SUCCESS: ./dump-to-path {'bytes': 15566365, 'count_of_rows': 90088, 'da
 Syncing Data Packages to Public Storage
 data/committees > https://console.cloud.google.com/storage/browser/dppctl/dppctl-worker-dkofij848dhiu/committees/
 ```
+
+### Static HTML Website Hosting
+
+```
+$ ls -R
+.:
+pipeline-spec.yaml template_functions.py render_list.py
+
+./public:
+404.html  bower_components  content  index.html  index_en.html  index_he.html  ribbons.css
+
+./templates:
+list.html list_item.html index.html
+$ cat pipeline-spec.yaml
+render_index:
+  pipeline:
+  - run: render_index
+    code: |
+        from datapackage_pipelines.wrapper import ingest, spew
+        from template_functions import render_template
+        parameters, datapackage, resources, stats = ingest() + ({},)
+        render_template('index.html', {"title": "Hello World"}, 'data/index.html')
+        spew(datapackage, [], stats)
+
+render_list:
+  pipline:
+  - run: load_resource
+    parameters:
+      url: https://console.cloud.google.com/storage/browser/dppctl/dppctl-worker-dkofij848dhiu/committees/
+      resource: .*
+  - run: render_list
+$ dppctl run all
+Using the public dppctl cluster
+do not use for private data!
+Run dppctl init --help for cluster initialization and configuration options
+Waiting for available worker and DB pods
+Assigned Worker Pod: dppctl-worker-dkofij848dhiu
+./render_index: SUCCESS, processed 90088 rows
+./render_list: SUCCESS, processed 90088 rows
+Syncing Static Website to Public Storage
+data/index.html > https://dppctl.uumpa.com/dppctl-worker-dkofij848dhiu/
+```
