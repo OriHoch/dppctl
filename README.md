@@ -39,6 +39,9 @@ dump-to-db:
         kns_jointcommittee
           resource-name: kns_jointcommittee
 $ dppctl run ./dump-to-db
+Using the public dppctl cluster
+do not use for private data!
+Run dppctl init --help for cluster initialization and configuration options
 Waiting for available worker and DB pods
 Assigned Worker Pod: dppctl-worker-rokfi8489824
 Assigned DB Pod: dppctl-db-koejijdif48joi
@@ -47,4 +50,6 @@ System: PostgreSQL, Server: localhost, Username: postgres, Password: idjnmfkjnfu
 ./dump-to-db: SUCCESS, processed 90088 rows
 INFO    :RESULTS:
 INFO    :SUCCESS: ./dump-to-db {'bytes': 15566365, 'count_of_rows': 90088, 'dataset_name': '_', 'hash': 'a3d87beee69e1915b884540960271752', 'num rows': 90088}
+Unassigned Worker Pod
+Keeping the DB and Web UI running for 1 hour
 ```
