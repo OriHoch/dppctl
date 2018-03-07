@@ -53,3 +53,63 @@ INFO    :SUCCESS: ./dump-to-db {'bytes': 15566365, 'count_of_rows': 90088, 'data
 Unassigned Worker Pod
 Keeping the DB and Web UI running for 1 hour
 ```
+
+### Private Cluster Initialization using Kamatera and usage of persistent pods
+
+Public cloud uses non persitent pods which are limited to 1 hour
+
+Starting a private cluster allows to use persistent pods which keep running forever
+
+```
+$ dppctl init kamatera
+Free Sign Up for The Kamatera Kubernetes service at ???
+Kamatera Account ID: 
+Kamatera Secret: 
+Initializing Cluster, re-run dppctl init to track initialization progress
+$ dppctl init
+Waiting for Kamatera cluster initialization
+Cluster is ready, starting 1 persistent DB pod and 2 persistent worker pods
+DB pod: dppctl-db-koejijdif48joi
+Worker pod: dppctl-worker-dkofij848dhiu
+Worker pod: dppctl-worker-0934j0fjoff
+dppctl initialization completed succesfully
+$ dppctl run ./dump-to-db
+Using kamatera private cluster
+Assigned Worker Pod: dppctl-worker-dkofij848dhiu
+Assigned DB Pod: dppctl-db-koejijdif48joi
+DB Web UI is available at https://dppctl.uumpa.com/dppctl-db-koejijdif48joi/
+System: PostgreSQL, Server: localhost, Username: postgres, Password: lkdfoij08j43fjforewrfij
+./dump-to-db: SUCCESS, processed 90088 rows
+INFO    :RESULTS:
+INFO    :SUCCESS: ./dump-to-db {'bytes': 15566365, 'count_of_rows': 90088, 'dataset_name': '_', 'hash': 'a3d87beee69e1915b884540960271752', 'num rows': 90088}
+$ dppctl list pods
+[{"name": "dppctl-worker-dkofij848dhiu", "status": "assigned"},
+ {"name": "dppctl-worker-0934j0fjoffdf", "status": "available"},
+ {"name": "dppctl-db-koejijdif4sss8joi", "status": "assigned"}]
+$ dppctl ssh dppctl-worker-dkofij848dhiu
+dppctl-worker-dkofij848dhiu:~$ dpp
+Available Pipelines:
+./dump-to-db
+dppctl-worker-dkofij848dhiu:~$ dpp run --verbose ./dump-to-db
+[./dump-to-db:T_0] >>> INFO    :c39d7233 RUNNING ./dump-to-db
+[./dump-to-db:T_0] >>> INFO    :c39d7233 Collecting dependencies
+[./dump-to-db:T_0] >>> INFO    :c39d7233 Running async task
+[./dump-to-db:T_0] >>> INFO    :c39d7233 Waiting for completion
+[./dump-to-db:T_0] >>> INFO    :c39d7233 Async task starting
+[./dump-to-db:T_0] >>> INFO    :c39d7233 Searching for existing caches
+[./dump-to-db:T_0] >>> INFO    :c39d7233 Building process chain:
+[./dump-to-db:T_0] >>> INFO    :- load_resource
+[./dump-to-db:T_0] >>> INFO    :- dump.to_sql
+./dump-to-db: WAITING FOR OUTPUT
+[./dump-to-db:T_0] >>> INFO    :- (sink)
+./dump-to-db: RUNNING, processed 89800 rows
+./dump-to-db: RUNNING, processed 89900 rows
+./dump-to-db: RUNNING, processed 90000 rows
+./dump-to-db: RUNNING, processed 90088 rows
+[./dump-to-db:T_0] >>> INFO    :dump.to_sql: INFO    :Processed 90088 rows
+[./dump-to-db:T_0] >>> INFO    :c39d7233 DONE /home/ori/virtualenvs/knesset-data-pipelines-fhQl9XOq/lib/python3.6/site-packages/datapackage_pipelines/manager/../lib/internal/sink.py
+[./dump-to-db:T_0] >>> INFO    :c39d7233 DONE /home/ori/virtualenvs/knesset-data-pipelines-fhQl9XOq/lib/python3.6/site-packages/datapackage_pipelines/specs/../lib/dump/to_sql.py
+[./dump-to-db:T_0] >>> INFO    :c39d7233 DONE V ./dump-to-db {'.dpp': {'out-datapackage-url': 'mayaslim/datapackage.json'}, 'bytes': 15566365, 'count_of_rows': 90088, 'dataset_name': '_', 'hash': 'cf1ad0f666601d174757b62d52643371', 'num./dump-to-db: SUCCESS, processed 90088 rows
+INFO    :RESULTS:
+INFO    :SUCCESS: ./dump-to-db {'bytes': 15566365, 'count_of_rows': 90088, 'dataset_name': '_', 'hash': 'cf1ad0f666601d174757b62d52643371', 'num rows': 90088}
+```
