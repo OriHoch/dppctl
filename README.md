@@ -113,3 +113,33 @@ dppctl-worker-dkofij848dhiu:~$ dpp run --verbose ./dump-to-db
 INFO    :RESULTS:
 INFO    :SUCCESS: ./dump-to-db {'bytes': 15566365, 'count_of_rows': 90088, 'dataset_name': '_', 'hash': 'cf1ad0f666601d174757b62d52643371', 'num rows': 90088}
 ```
+
+### Persistent Storage of Public Data Packages
+
+```
+$ dppctl init public
+Switching to the public dppctl cluster
+$ ls
+pipeline-spec.yaml
+$ cat pipeline-spec.yaml
+dump-to-path:
+  pipeline:
+  - run: load_resource
+    parameters:
+      url: https://storage.googleapis.com/knesset-data-pipelines/data/committees/all/datapackage.json
+      resource: .*
+  - run: dump.to_path
+    parameters:
+      out-path: data/committees
+$ dppctl run ./dump-to-path
+Using the public dppctl cluster
+do not use for private data!
+Run dppctl init --help for cluster initialization and configuration options
+Waiting for available worker and DB pods
+Assigned Worker Pod: dppctl-worker-dkofij848dhiu
+./dump-to-path: SUCCESS, processed 90088 rows
+INFO    :RESULTS:
+INFO    :SUCCESS: ./dump-to-path {'bytes': 15566365, 'count_of_rows': 90088, 'dataset_name': '_', 'hash': 'a3d87beee69e1915b884540960271752', 'num rows': 90088}
+Syncing Data Packages to Public Storage
+data/committees > https://console.cloud.google.com/storage/browser/dppctl/dppctl-worker-dkofij848dhiu/committees/
+```
