@@ -185,3 +185,25 @@ Assigned Worker Pod: dppctl-worker-dkofij848dhiu
 Syncing Static Website to Public Storage
 data/index.html > https://dppctl.uumpa.com/dppctl-worker-dkofij848dhiu/
 ```
+
+### Using a local cluster with minikube, publish to public dppctl cluster
+
+Run locally using [minikube](https://github.com/kubernetes/minikube), publish to the public cluster
+
+```
+$ dppctl init minikube-public
+Initializing a local minikube cluster which publishes data to the public dppctl cluster
+Track progress by re-running dppctl init
+$ dppctl init
+Waiting for local minikube cluster to be created
+Cluster is ready with 1 worker pod
+$ dppctl run
+Using local minikube cluster with public publishing
+do not use for private data!
+Run dppctl init --help for cluster initialization and configuration options
+Assigned Worker Pod: dppctl-worker-dkofij848dhiu
+./render_index: SUCCESS, processed 90088 rows
+./render_list: SUCCESS, processed 90088 rows
+Syncing Static Website to Public Storage
+data/index.html > https://dppctl.uumpa.com/dppctl-worker-dkofij848dhiu/
+```
