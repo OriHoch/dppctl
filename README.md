@@ -212,19 +212,31 @@ data/index.html > https://dppctl.uumpa.com/dppctl-worker-dkofij848dhiu/
 
 ```
 $ ls
-pipeline-spec.yaml Dockerfile
-$ dppctl init minikube-public
-Local minikube cluster is ready with 1 worker pod
-$ dppctl run all
-Using local minikube cluster with public publishing
-do not use for private data!
-Building docker image from Dockerfile
-Creating worker pod with the image
-Assigned Worker Pod: dppctl-worker-dfe9k3jjfu
-./process: SUCCESS, processed 90088 rows
-$ dppctl run all
-Using local minikube cluster with public publishing
-do not use for private data!
-Using existing docker image: ----
-Assigned worker pod: dppctl-worker-dfe9k3jjfu
+pipeline-spec.yaml Dockerfile .dppctl.yaml
+$ cat Dockerfile
+from frictionlessdata/datapackage-pipelines
+$ cat .dppctl.yaml
+clusterProvider: gcloud
+gcloudProjectId: dppctl
+gcloudZone: us-central1-a
+gcloudClusterName: dppctl
+gcloudClusterNamespace: dppctl
+continuousDeployment:
+- appRepoPath: OriHoch/dppctl/examples/customDockerImageAndContinuousDeployment
+  opsRepoPath: OriHoch/examples/opsRepo
+  actions:
+  - branch: master
+    environment: staging
+    pipeline: all
+  - tags: true
+    environment: production
+    pipeline: all
+$ dppctl init
+gcloud cluster is ready
+to setup continuous deployment you need to create a GitHub machine user and provide the details
+GitHub Auth Token:
+GitHub Continuous Deployment user name:
+GitHub Continuous Deployment user email:
+setting up continuous deployment of 'all' pipelines on commits to master branch of OriHoch/dppctl/examples/customDockerImageAndContinuousDeployment to staging environment of ops repo OriHoch/examples/opsRepo
+setting up continuous deployment of 'all' pipelines' on published tags of OriHoch/dppctl/examples/customDockerImageAndContinuousDeployment to ops repo OriHoch/examples/opsRepo
 ```
