@@ -207,3 +207,24 @@ Assigned Worker Pod: dppctl-worker-dkofij848dhiu
 Syncing Static Website to Public Storage
 data/index.html > https://dppctl.uumpa.com/dppctl-worker-dkofij848dhiu/
 ```
+
+### Use a custom docker image + continuous deployment
+
+```
+$ ls
+pipeline-spec.yaml Dockerfile
+$ dppctl init minikube-public
+Local minikube cluster is ready with 1 worker pod
+$ dppctl run all
+Using local minikube cluster with public publishing
+do not use for private data!
+Building docker image from Dockerfile
+Creating worker pod with the image
+Assigned Worker Pod: dppctl-worker-dfe9k3jjfu
+./process: SUCCESS, processed 90088 rows
+$ dppctl run all
+Using local minikube cluster with public publishing
+do not use for private data!
+Using existing docker image: ----
+Assigned worker pod: dppctl-worker-dfe9k3jjfu
+```
