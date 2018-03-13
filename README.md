@@ -275,3 +275,5 @@ Provides authentication based on 3rd party OAuth providers (GitHub / Google)
 ### Business Logic Server
 
 Provides the business logic, initiates actions based on changes, for example to enforce usage limits
+
+Gets notified by the Operator proxy about every action and keeps full usage log and related metrics.
