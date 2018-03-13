@@ -254,9 +254,9 @@ The dppctl operator will act on pipeline resource changes - when a request to ru
 
 A Helm chart that starts pipelines and related infrastructure, see [1](https://github.com/OriHoch/datapackage-pipelines-playground/tree/master/charts/pipeline) [2](https://github.com/OriHoch/knesset-data-k8s/tree/master/charts-external/pipelines-jobs)
 
-### Dppctl Operator Proxy
+Each pipeline is a deployment with a specific pipeline docker image, when the pod starts it waits for the workload. Once it received the workload, it either - runs and exits (causing another pod to start), or - keeps running (e.g. to support cronjobs, or other design patterns)
 
-An API proxy that forwards requests to the Dppctl operator after validating with auth server
+The pipeline chart includes both the pipeline and the related infrastructure, all as a single chart, configurable by custom yaml configuration (the helm chart values).
 
 ### Dppctl CLI
 
@@ -264,6 +264,14 @@ The main user interface, interacts with the operator via the operator proxy.
 
 Also, provides scripts to initialize a new dppctl environment and install the required components.
 
+### Dppctl Operator Proxy
+
+An API proxy that forwards requests to the Dppctl operator, validates with the auth and and business logic servers
+
 ### Auth Server
 
-Helm chart that provides authentication based on 3rd party OAuth providers (GitHub / Google)
+Provides authentication based on 3rd party OAuth providers (GitHub / Google)
+
+### Business Logic Server
+
+Provides the business logic, initiates actions based on changes, for example to enforce usage limits
