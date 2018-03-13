@@ -250,6 +250,8 @@ A Helm chart that installs a Kubernetes custom resource definition using operato
 
 The dppctl operator will act on pipeline resource changes - when a request to run a pipeline is received the operator will deploy relevant pods / deployments using the dppctl pipelines Helm Chart
 
+see [1](https://github.com/giantswarm/operator-example-python?files=1)
+
 ### Dppctl Pipelines Infra.
 
 A Helm chart that starts pipelines and related infrastructure, see [1](https://github.com/OriHoch/datapackage-pipelines-playground/tree/master/charts/pipeline) [2](https://github.com/OriHoch/knesset-data-k8s/tree/master/charts-external/pipelines-jobs)
