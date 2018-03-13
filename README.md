@@ -260,8 +260,10 @@ An API proxy that forwards requests to the Dppctl operator after validating with
 
 ### Dppctl CLI
 
-Interacts with the operator 
+The main user interface, interacts with the operator via the operator proxy.
+
+Also, provides scripts to initialize a new dppctl environment and install the required components.
 
 ### Auth Server
 
-Authentication based on 3rd party OAuth providers (GitHub / Google)
+Helm chart that provides authentication based on 3rd party OAuth providers (GitHub / Google)
