@@ -1,6 +1,6 @@
 # dppctl
 
-Combining the great work from [Frictionless Data](https://frictionlessdata.io/) and [Kubernetes](https://kubernetes.io/) to provide an end to end solution for Scalable datapackage pipelines processing and related infrastructure.
+Combining the great work from [Frictionless Data](https://frictionlessdata.io/) and [Kubernetes](https://kubernetes.io/) to provide an end to end, serverless solution for Scalable data pipelines processing and related infrastructure.
 
 
 **work in progress**
