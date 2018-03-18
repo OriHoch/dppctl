@@ -2,6 +2,8 @@
 
 Serverless Data Pipelines Framework
 
+**Work In Progress, Contributions Welcome!**
+
 ## Differentiating factors from other serverless frameworks
 
 * Focus on data, relying on the [frictionless data](https://frictionlessdata.io/) methodolgy, specs and tools
@@ -14,9 +16,6 @@ Serverless Data Pipelines Framework
 * Pipelines processing using [datapackage-pipelines framework](https://github.com/frictionlessdata/datapackage-pipelines/blob/master/README.md) - Handles the data pipelines processing which is at the core of the framework. Pipelines are defined using a simple yaml format with a rich standard library of processors.
 * Infrastructure management using [Kubernetes](kubernetes.io) - providing the dynamic and scalable infrastructure for running the pipelines, and allowing to dynamically add related infrastructure as needed
 * Python 3.6 - Using latest Python is great for data processing, you can embed Python code inside the pipelines yaml, as files alongside the pipelines yaml or as separate Python packages.
-
-
-**work in progress**
 
 ## Usage Examples
 
