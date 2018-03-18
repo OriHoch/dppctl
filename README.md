@@ -1,6 +1,19 @@
 # dppctl
 
-Combining the great work from [Frictionless Data](https://frictionlessdata.io/) and [Kubernetes](https://kubernetes.io/) to provide an end to end, serverless solution for Scalable data pipelines processing and related infrastructure.
+Serverless Data Pipelines Framework
+
+## Differentiating factors from other serverless frameworks
+
+* Focus on data, relying on the [frictionless data](https://frictionlessdata.io/) methodolgy, specs and tools
+* Minimal external 3rd party service dependencies, including minimal dependency on the `dppctl` framework itself
+* Open to extend and customize using existing skills and knowledge
+* Highly constrained to allow to focus on specific use-cases (does not intend to replace existing serverless frameworks)
+
+## Core Technologies
+
+* Pipelines processing using [datapackage-pipelines framework](https://github.com/frictionlessdata/datapackage-pipelines/blob/master/README.md) - Handles the data pipelines processing which is at the core of the framework. Pipelines are defined using a simple yaml format with a rich standard library of processors.
+* Infrastructure management using [Kubernetes](kubernetes.io) - providing the dynamic and scalable infrastructure for running the pipelines, and allowing to dynamically add related infrastructure as needed
+* Python 3.6 - Using latest Python is great for data processing, you can embed Python code inside the pipelines yaml, as files alongside the pipelines yaml or as separate Python packages.
 
 
 **work in progress**
