@@ -17,6 +17,15 @@ Serverless Data Pipelines Framework
 * Infrastructure management using [Kubernetes](kubernetes.io) - providing the dynamic and scalable infrastructure for running the pipelines, and allowing to dynamically add related infrastructure as needed
 * Python 3.6 - Using latest Python is great for data processing, you can embed Python code inside the pipelines yaml, as files alongside the pipelines yaml or as separate Python packages.
 
+## Components and Architecture
+
+* [dppctl-py](https://github.com/OriHoch/dppctl-py) - provides the main dppctl Python library which provides the core functionality. Also provides the CLI to allow to interact with the library.
+* [dppctl-pipelines](https://github.com/OriHoch/dppctl-pipelines) - Kubernetes Helm chart that defines the pipelines runner and related infrastructure.
+* dppctl-operator - Kubernetes custom resource definition using operator pattern to support declarative interaction with the dppctl Python library. see [1](https://github.com/giantswarm/operator-example-python?files=1)
+* dppctl-api - REST api to allow secure, authenticate interaction with the dppctl Python library
+  * auth server - provides authentication based on 3rd party OAuth providers (GitHub / Google)
+  * business logic server - provides business logic, initiates actions based on changes, for example to enforce usage limits.
+
 ## Usage Examples
 
 ### Dump datapackage to DB
@@ -255,42 +264,3 @@ GitHub Continuous Deployment user email:
 setting up continuous deployment of 'all' pipelines on commits to master branch of OriHoch/dppctl/examples/customDockerImageAndContinuousDeployment to staging environment of ops repo OriHoch/examples/opsRepo
 setting up continuous deployment of 'all' pipelines' on published tags of OriHoch/dppctl/examples/customDockerImageAndContinuousDeployment to ops repo OriHoch/examples/opsRepo
 ```
-
-
-## Ideal Systems Architecture
-
-### Dppctl Operator
-
-A Helm chart that installs a Kubernetes custom resource definition using operator pattern to start / stop pipeline workers and related infra.
-
-The dppctl operator will act on pipeline resource changes - when a request to run a pipeline is received the operator will deploy relevant pods / deployments using the dppctl pipelines Helm Chart
-
-see [1](https://github.com/giantswarm/operator-example-python?files=1)
-
-### Dppctl Pipelines Infra.
-
-A Helm chart that starts pipelines and related infrastructure, see [1](https://github.com/OriHoch/datapackage-pipelines-playground/tree/master/charts/pipeline) [2](https://github.com/OriHoch/knesset-data-k8s/tree/master/charts-external/pipelines-jobs)
-
-Each pipeline is a deployment with a specific pipeline docker image, when the pod starts it waits for the workload. Once it received the workload, it either - runs and exits (causing another pod to start), or - keeps running (e.g. to support cronjobs, or other design patterns)
-
-The pipeline chart includes both the pipeline and the related infrastructure, all as a single chart, configurable by custom yaml configuration (the helm chart values).
-
-### Dppctl CLI
-
-The main user interface, interacts with the operator via the operator proxy.
-
-Also, provides scripts to initialize a new dppctl environment and install the required components.
-
-### Dppctl Operator Proxy
-
-An API proxy that forwards requests to the Dppctl operator, validates with the auth and and business logic servers
-
-### Auth Server
-
-Provides authentication based on 3rd party OAuth providers (GitHub / Google)
-
-### Business Logic Server
-
-Provides the business logic, initiates actions based on changes, for example to enforce usage limits
-
-Gets notified by the Operator proxy about every action and keeps full usage log and related metrics.
